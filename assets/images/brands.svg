@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+    <rect width="1200" height="800" fill="#0c0d0d"/>
+    <g fill="none" stroke="#d4f53c" stroke-width="3" opacity=".28">
+      <rect x="130" y="140" width="240" height="160"/><rect x="480" y="140" width="240" height="160"/><rect x="830" y="140" width="240" height="160"/>
+      <rect x="130" y="390" width="240" height="160"/><rect x="480" y="390" width="240" height="160"/><rect x="830" y="390" width="240" height="160"/>
+    </g>
+    <text x="115" y="720" fill="#d4f53c" font-family="Arial" font-size="48" font-weight="700">BRANDS</text>
+    </svg>

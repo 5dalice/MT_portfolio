@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+    <rect width="1200" height="800" fill="#0c0d0d"/>
+    <g stroke="#d4f53c" fill="none" stroke-width="3" opacity=".30">
+      <circle cx="260" cy="330" r="120"/><circle cx="600" cy="330" r="120"/><circle cx="940" cy="330" r="120"/>
+      <path d="M380 330H480M720 330H820"/>
+    </g>
+    <g fill="#d4f53c" opacity=".18"><circle cx="260" cy="330" r="58"/><circle cx="600" cy="330" r="58"/><circle cx="940" cy="330" r="58"/></g>
+    <text x="115" y="720" fill="#d4f53c" font-family="Arial" font-size="48" font-weight="700">COLLABORATIONS</text>
+    </svg>

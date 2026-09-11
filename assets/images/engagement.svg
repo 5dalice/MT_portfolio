@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+    <rect width="1200" height="800" fill="#0c0d0d"/>
+    <g fill="#d4f53c" opacity=".24">
+      <rect x="160" y="520" width="110" height="120"/><rect x="310" y="430" width="110" height="210"/>
+      <rect x="460" y="320" width="110" height="320"/><rect x="610" y="210" width="110" height="430"/>
+      <rect x="760" y="145" width="110" height="495"/>
+    </g>
+    <path d="M150 570 C300 520, 380 380, 520 410 S760 230, 980 190" fill="none" stroke="#d4f53c" stroke-width="8"/>
+    <text x="115" y="720" fill="#d4f53c" font-family="Arial" font-size="48" font-weight="700">ENGAGEMENT</text>
+    </svg>
