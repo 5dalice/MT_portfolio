@@ -1,6 +1,8 @@
 const navLinks = [...document.querySelectorAll('.site-nav a[href^="#"]')];
 const views = [...document.querySelectorAll('.view')];
 const homeLink = document.querySelector('.brand-mark');
+const caseLinks = [...document.querySelectorAll('[data-case-trigger]')];
+const caseBlocks = [...document.querySelectorAll('.case-study')];
 
 const routeMap = {
   '': 'home',
@@ -10,12 +12,22 @@ const routeMap = {
   '#collaborations': 'collaborations',
   '#brands': 'brands',
   '#packages': 'packages',
-  '#contact': 'contact'
+  '#contact': 'contact',
+  '#xpeng-case': 'content',
+  '#hp-case': 'collaborations'
 };
+
+function setCaseState(caseName) {
+  caseBlocks.forEach(block => {
+    const matches = block.dataset.case === caseName;
+    block.classList.toggle('is-visible', matches);
+  });
+}
 
 function updateRoute() {
   const hash = window.location.hash || '';
   const resolvedView = routeMap[hash] || 'home';
+  const activeCase = hash === '#xpeng-case' ? 'xpeng' : hash === '#hp-case' ? 'hp' : null;
 
   views.forEach(view => {
     const isActive = view.id === resolvedView;
@@ -30,6 +42,16 @@ function updateRoute() {
 
   if (resolvedView === 'home' && location.hash) {
     history.replaceState(null, '', window.location.pathname + window.location.search);
+    return updateRoute();
+  }
+
+  if (activeCase) {
+    setCaseState(activeCase);
+  } else {
+    caseBlocks.forEach(block => {
+      const isDefaultVisible = block.dataset.section === 'collaborations' && block.dataset.case === 'xpeng';
+      block.classList.toggle('is-visible', isDefaultVisible);
+    });
   }
 }
 
@@ -54,6 +76,17 @@ navLinks.forEach(link => {
   link.addEventListener('click', event => {
     event.preventDefault();
     navigateTo(target);
+  });
+});
+
+caseLinks.forEach(link => {
+  link.addEventListener('click', event => {
+    event.preventDefault();
+    const targetCase = link.dataset.caseTrigger;
+    const hash = targetCase === 'xpeng' ? '#xpeng-case' : targetCase === 'hp' ? '#hp-case' : '#content';
+    const path = window.location.pathname + window.location.search;
+    history.pushState(null, '', `${path}${hash}`);
+    updateRoute();
   });
 });
 
