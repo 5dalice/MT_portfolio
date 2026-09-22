@@ -1,23 +1,70 @@
-// MT Portfolio — lightweight front-end behavior
-
-// Highlight the current navigation section while scrolling.
 const navLinks = [...document.querySelectorAll('.site-nav a[href^="#"]')];
-const sections = navLinks
-  .map(link => document.querySelector(link.getAttribute('href')))
-  .filter(Boolean);
+const views = [...document.querySelectorAll('.view')];
+const homeLink = document.querySelector('.brand-mark');
 
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (!entry.isIntersecting) return;
+const routeMap = {
+  '': 'home',
+  '#about': 'about',
+  '#content': 'content',
+  '#engagement': 'engagement',
+  '#collaborations': 'collaborations',
+  '#brands': 'brands',
+  '#packages': 'packages',
+  '#contact': 'contact'
+};
 
-    navLinks.forEach(link => {
-      const isCurrent = link.getAttribute('href') === `#${entry.target.id}`;
-      link.classList.toggle('is-active', isCurrent);
-    });
+function updateRoute() {
+  const hash = window.location.hash || '';
+  const resolvedView = routeMap[hash] || 'home';
+
+  views.forEach(view => {
+    const isActive = view.id === resolvedView;
+    view.classList.toggle('is-active', isActive);
   });
-}, {
-  rootMargin: '-35% 0px -55% 0px',
-  threshold: 0
+
+  navLinks.forEach(link => {
+    const target = link.getAttribute('href') || '';
+    const isCurrent = target === `#${resolvedView}` || (resolvedView === 'home' && target === '#about');
+    link.classList.toggle('is-active', isCurrent);
+  });
+
+  if (resolvedView === 'home' && location.hash) {
+    history.replaceState(null, '', window.location.pathname + window.location.search);
+  }
+}
+
+function navigateTo(target) {
+  const nextHash = target || '';
+  const path = window.location.pathname + window.location.search;
+
+  if (nextHash === '#') {
+    history.pushState(null, '', path);
+    updateRoute();
+    return;
+  }
+
+  const nextUrl = nextHash === '' ? path : `${path}${nextHash}`;
+  history.pushState(null, '', nextUrl);
+  updateRoute();
+}
+
+navLinks.forEach(link => {
+  const target = link.getAttribute('href') || '';
+
+  link.addEventListener('click', event => {
+    event.preventDefault();
+    navigateTo(target);
+  });
 });
 
-sections.forEach(section => observer.observe(section));
+if (homeLink) {
+  homeLink.addEventListener('click', event => {
+    event.preventDefault();
+    navigateTo('');
+  });
+}
+
+window.addEventListener('hashchange', updateRoute);
+window.addEventListener('popstate', updateRoute);
+
+updateRoute();
