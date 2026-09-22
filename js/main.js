@@ -9,12 +9,12 @@ const routeMap = {
   '#about': 'about',
   '#content': 'content',
   '#engagement': 'engagement',
-  '#collaborations': 'collaborations',
-  '#brands': 'brands',
   '#packages': 'packages',
   '#contact': 'contact',
+  '#collaborations': 'content',
+  '#brands': 'content',
   '#xpeng-case': 'content',
-  '#hp-case': 'collaborations'
+  '#hp-case': 'content'
 };
 
 function setCaseState(caseName) {
@@ -26,6 +26,13 @@ function setCaseState(caseName) {
 
 function updateRoute() {
   const hash = window.location.hash || '';
+
+  if (hash === '#brands' || hash === '#collaborations') {
+    const path = window.location.pathname + window.location.search;
+    history.replaceState(null, '', `${path}#content`);
+    return updateRoute();
+  }
+
   const resolvedView = routeMap[hash] || 'home';
   const activeCase = hash === '#xpeng-case' ? 'xpeng' : hash === '#hp-case' ? 'hp' : null;
 
@@ -40,16 +47,11 @@ function updateRoute() {
     link.classList.toggle('is-active', isCurrent);
   });
 
-  if (resolvedView === 'home' && location.hash) {
-    history.replaceState(null, '', window.location.pathname + window.location.search);
-    return updateRoute();
-  }
-
   if (activeCase) {
     setCaseState(activeCase);
   } else {
     caseBlocks.forEach(block => {
-      const isDefaultVisible = block.dataset.section === 'collaborations' && block.dataset.case === 'xpeng';
+      const isDefaultVisible = block.dataset.section === 'content' && block.dataset.case === 'xpeng';
       block.classList.toggle('is-visible', isDefaultVisible);
     });
   }
@@ -83,9 +85,9 @@ caseLinks.forEach(link => {
   link.addEventListener('click', event => {
     event.preventDefault();
     const targetCase = link.dataset.caseTrigger;
-    const hash = targetCase === 'xpeng' ? '#xpeng-case' : targetCase === 'hp' ? '#hp-case' : '#content';
+    const nextHash = targetCase === 'xpeng' ? '#xpeng-case' : targetCase === 'hp' ? '#hp-case' : '#content';
     const path = window.location.pathname + window.location.search;
-    history.pushState(null, '', `${path}${hash}`);
+    history.pushState(null, '', `${path}${nextHash}`);
     updateRoute();
   });
 });

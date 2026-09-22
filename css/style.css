@@ -678,19 +678,73 @@ img { max-width: 100%; display: block; }
   color: var(--ink);
 }
 
-.categories-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
-}
-.cat-item {
-  min-height: 120px;
+.content-filter-bar {
   display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0 0 18px;
+}
+.content-filter-bar a {
+  display: inline-flex;
   align-items: center;
-  gap: 14px;
-  padding: 24px;
-  font-weight: 600;
+  min-height: 42px;
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255,255,255,0.42);
   color: var(--ink);
+  text-decoration: none;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.content-filter-bar a:hover,
+.content-filter-bar a:focus-visible {
+  border-color: rgba(11, 71, 115, 0.34);
+}
+
+.brand-cluster {
+  margin: 20px 0 28px;
+  padding: 18px 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(255,255,255,0.38);
+}
+.compact-brand-cluster .tag-list {
+  margin-top: 12px;
+}
+.tag-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 8px 12px;
+  border: 1px solid rgba(11, 71, 115, 0.28);
+  border-radius: 999px;
+  background: rgba(11, 71, 115, 0.06);
+  color: var(--blue-dark);
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.selected-work {
+  display: grid;
+  gap: 26px;
+}
+.selected-work-header {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.selected-work-header h3 {
+  margin: 0;
+  font-size: clamp(28px, 3vw, 42px);
+  letter-spacing: -0.05em;
+}
+
+.categories-grid {
+  display: none;
 }
 .cat-dot {
   display: inline-block;
@@ -795,12 +849,25 @@ img { max-width: 100%; display: block; }
 
 .case-study {
   display: none;
-  margin-top: 24px;
-  padding: 26px 24px 22px;
+  position: relative;
+  margin-top: 0;
+  padding: 24px 22px 22px;
   border: 1px solid var(--line);
   border-radius: 22px;
-  background: rgba(255,255,255,0.62);
+  background: rgba(255,255,255,0.72);
   box-shadow: 0 16px 42px rgba(16, 20, 26, 0.08);
+  overflow: hidden;
+}
+.case-study::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.16), rgba(255,255,255,0.28));
+  pointer-events: none;
+}
+.case-study > * {
+  position: relative;
+  z-index: 1;
 }
 .case-study.is-visible {
   display: block;
@@ -847,7 +914,7 @@ img { max-width: 100%; display: block; }
   grid-template-columns: minmax(180px, 260px) minmax(0, 1fr);
   gap: 22px;
   align-items: end;
-  padding: 22px 0 12px;
+  padding: 18px 0 14px;
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
 }
@@ -896,6 +963,9 @@ img { max-width: 100%; display: block; }
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
 }
+.video-grid-two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
 .video-card {
   display: flex;
   flex-direction: column;
@@ -939,6 +1009,7 @@ img { max-width: 100%; display: block; }
 .video-copy {
   display: grid;
   gap: 8px;
+  min-height: 88px;
   padding: 16px 16px 18px;
 }
 .video-copy strong {
@@ -950,6 +1021,18 @@ img { max-width: 100%; display: block; }
   color: var(--stone);
   font-size: 11px;
   line-height: 1.5;
+}
+.case-note {
+  margin-top: 18px;
+  padding: 18px 20px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(255,255,255,0.28);
+}
+.case-note p {
+  margin: 0;
+  color: var(--charcoal);
+  line-height: 1.6;
 }
 .case-link-row {
   justify-content: flex-start;
@@ -1152,9 +1235,15 @@ img { max-width: 100%; display: block; }
   .metrics-strip > div { border-right: none; border-bottom: 1px solid var(--line); }
   .metrics-strip > div:last-child { border-bottom: none; }
   .section-header {
-    grid-template-columns: 52px minmax(0, 1fr);
+    grid-template-columns: 1fr;
+    gap: 10px;
   }
-  .section-title { font-size: 42px; }
+  .section-title {
+    font-size: 42px;
+    max-width: 100%;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+  }
   .story-card p { font-size: 17px; }
   .thumbnail-head {
     display: block;
